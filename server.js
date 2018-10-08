@@ -33,6 +33,7 @@ app.get('/api/notes', (req, res) => {
 //GET INDIVIDUAL NOTE ENDPOINT
 
 app.get('/api/notes/:id', (req, res) => {
+  const id = req.params.id;
   let requestedData = data.find(item => item.id === Number(id));
   res.json(requestedData);
 })
