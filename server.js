@@ -13,8 +13,17 @@ const app = express();
 
 app.use(express.static('public'));
 
+//GET NOTES LIST ENDPOINT
 app.get('/api/notes', (req, res) => {
   res.json(data);
+})
+
+//GET INDIVIDUAL NOTE ENDPOINT
+
+app.get('/api/notes/:id', (req, res) => {
+  const { id } = req.params;
+  let requestedData = data.find(item => item.id === Number(id));
+  res.json(requestedData);
 })
 
 app.listen(8080, function() {
