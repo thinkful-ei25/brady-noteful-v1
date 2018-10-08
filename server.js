@@ -14,8 +14,6 @@ const app = express();
 app.use(express.static('public'));
 
 
-
-
 //GET NOTES LIST ENDPOINT
 app.get('/api/notes', (req, res) => {
   const { searchTerm } = req.query;
