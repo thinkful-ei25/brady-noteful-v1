@@ -13,15 +13,26 @@ const app = express();
 
 app.use(express.static('public'));
 
+
+
+
 //GET NOTES LIST ENDPOINT
 app.get('/api/notes', (req, res) => {
-  res.json(data);
-})
+  const { searchTerm } = req.query;
+
+  if(!searchTerm) {
+    res.json(data);
+  } else {
+    let searchResults = data.filter(function(item) {
+      return item.title.includes(searchTerm);
+    });
+    res.json(searchResults);
+  }
+});
 
 //GET INDIVIDUAL NOTE ENDPOINT
 
 app.get('/api/notes/:id', (req, res) => {
-  const { id } = req.params;
   let requestedData = data.find(item => item.id === Number(id));
   res.json(requestedData);
 })
