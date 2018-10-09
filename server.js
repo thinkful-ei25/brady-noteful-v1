@@ -42,8 +42,13 @@ app.get('/api/notes', (req, res, next) => {
 
 app.get('/api/notes/:id', (req, res) => {
   const id = req.params.id;
-  let requestedData = data.find(item => item.id === Number(id));
-  res.json(requestedData);
+
+  notes.find(id, (err, list) => {
+    if(err) {
+      return next(err);
+    }
+    res.json(list);
+  });
 });
 
 //Error-handling
