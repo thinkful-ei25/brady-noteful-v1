@@ -21,7 +21,7 @@ const { requestLogger } = require('./middleware/logger');
 
 // INSERT EXPRESS APP CODE HERE...
 
-app.use([express.static('public'), requestLogger]);
+app.use([requestLogger, express.static('public'), express.json()]);
 //app.use(requestLogger);
 
 
@@ -50,6 +50,31 @@ app.get('/api/notes/:id', (req, res) => {
     res.json(list);
   });
 });
+
+app.put('/api/notes/:id', (req, res, next) => {
+  const id = req.params.id;
+
+  const updateObj = {};
+  const updateFields = ['title', 'content'];
+
+  updateFields.forEach(field => {
+    if (field in req.body) {
+      updateObj[field] = req.body[field];
+    }
+  });
+
+  notes.update(id, updateObj, (err, item) => {
+    if(err) {
+      return next(err);
+    }
+    if (item) {
+      res.json(item);
+    } else {
+      next();
+    }
+  });
+});
+
 
 //Error-handling
 
