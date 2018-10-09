@@ -12,10 +12,15 @@ const express = require('express');
 
 const app = express();
 
+//require logger.js middleware
+const { requestLogger } = require('./middleware/logger');
+
+
 // INSERT EXPRESS APP CODE HERE...
 
-app.use(express.static('public'));
-//
+app.use([express.static('public'), requestLogger]);
+//app.use(requestLogger);
+
 
 
 //GET NOTES LIST ENDPOINT
