@@ -27,18 +27,15 @@ app.use([express.static('public'), requestLogger]);
 
 
 //GET NOTES LIST ENDPOINT
-app.get('/api/notes', (req, res) => {
+app.get('/api/notes', (req, res, next) => {
   const { searchTerm } = req.query;
 
-
-  if(!searchTerm) {
-    res.json(data);
-  } else {
-    let searchResults = data.filter(function(item) {
-      return item.title.includes(searchTerm);
-    });
-    res.json(searchResults);
-  }
+  notes.filter(searchTerm, (err, list) => {
+    if(err) {
+      return next(err);
+    }
+    res.json(list);
+  });
 });
 
 //GET INDIVIDUAL NOTE ENDPOINT
