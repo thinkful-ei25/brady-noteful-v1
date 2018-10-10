@@ -77,6 +77,24 @@ router.put('/notes/:id', (req, res, next) => {
     })
   });
 
-  
+
+  router.delete('/notes/:id', (req, res, next) => {
+    const id = req.params.id;
+
+    if(!id) {
+      const err = new Error('No ID found');
+      err.status = 500;
+      return next(err);
+    }
+    notes.delete(id, (err, item) => {
+      if (err) {
+        return next(err);
+      } else {
+        res.status(204).end();
+      }
+    });
+  });
+
+
 
 module.exports = router;
