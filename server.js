@@ -9,14 +9,16 @@ const notes = simDB.initialize(data);
 //require config.js module
 const { PORT } = require('./config'); 
 
-console.log('Hello Noteful!');
+
 
 const express = require('express');
+
+const morgan = require('morgan')
 
 const app = express();
 
 //require logger.js middleware
-const { requestLogger } = require('./middleware/logger');
+const requestLogger = morgan('dev');
 
 
 // INSERT EXPRESS APP CODE HERE...
