@@ -23,15 +23,17 @@ router.get('/notes', (req, res, next) => {
 router.get('/notes/:id', (req, res, next) => {
   const id = req.params.id;
 
-  notes.find(id, (err, list) => {
-    if(err) {
-      return next(err);
-    } if(list) {
-    res.json(list);
-    } else {
-      next();
-    }
-  });
+  notes.find(id)
+    .then(item => {
+      if(item) {
+        res.json(item);
+      } else {
+        next();
+      }
+    })
+    .catch(err => {
+      next(err)
+    }); 
 });
 
 router.put('/notes/:id', (req, res, next) => {
