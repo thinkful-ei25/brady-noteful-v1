@@ -84,6 +84,7 @@ router.put('/notes/:id', (req, res, next) => {
   router.delete('/notes/:id', (req, res, next) => {
     const id = req.params.id;
 
+
     if(!id) {
       const err = new Error('No ID found');
       err.status = 500;
