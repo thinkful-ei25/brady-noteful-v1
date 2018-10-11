@@ -11,12 +11,17 @@ const notes = simDB.initialize(data);
 router.get('/notes', (req, res, next) => {
   const { searchTerm } = req.query;
 
-  notes.filter(searchTerm, (err, list) => {
-    if(err) {
-      return next(err);
-    }
-    res.json(list);
-  });
+  notes.filter(searchTerm)
+    .then(item => {
+      if(item) {
+        res.json(item);
+      } else {
+        next();
+      }
+    })
+    .catch(err => {
+      next(err);
+    });
 });
 
 
