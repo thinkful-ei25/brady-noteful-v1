@@ -93,13 +93,12 @@ router.put('/notes/:id', (req, res, next) => {
 
   router.delete('/notes/:id', (req, res, next) => {
     const id = req.params.id;
-    notes.delete(id, (err) => {
-      if(err) {
+    notes.delete(id)
+      .then(res.sendStatus(204))
+      .catch(err => {
         return next(err);
-      }
-      res.status(204);
       });
-  });
+    });
 
 
 
