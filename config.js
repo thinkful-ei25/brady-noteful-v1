@@ -1,2 +1,6 @@
-//Set the environment variable PORT to tell the web server port to listen to.
-module.exports.PORT = 8080;
+'use strict';
+
+const PORT = process.env.PORT || 8080;
+module.exports = {
+  PORT,
+};
