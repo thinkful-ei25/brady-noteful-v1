@@ -37,7 +37,7 @@ router.get('/notes/:id', (req, res, next) => {
       }
     })
     .catch(err => {
-      next(err)
+      next(err);
     }); 
 });
 
@@ -62,43 +62,43 @@ router.put('/notes/:id', (req, res, next) => {
       }
     })
     .catch(err => {
-      next(err)
+      next(err);
     });
 });
 
-  router.post('/notes', (req, res, next) => {
-    const { title, content } = req.body;
+router.post('/notes', (req, res, next) => {
+  const { title, content } = req.body;
 
-    const newItem = { title, content};
+  const newItem = { title, content};
 
-    if(!newItem.title) {
-      const err = new Error('Missing `title` in request body');
-      err.status = 400;
-      return next(err);
-    }
+  if(!newItem.title) {
+    const err = new Error('Missing `title` in request body');
+    err.status = 400;
+    return next(err);
+  }
 
-    notes.create(newItem)
-      .then(item => {
-        if(item) {
-          res.location(`http://${req.headers.host}/notes/${item.id}`).status(201).json(item);
-        } else {
-          next();
-        }
-      })
-      .catch(err => {
-        next(err);
-      })
-  });
-
-
-  router.delete('/notes/:id', (req, res, next) => {
-    const id = req.params.id;
-    notes.delete(id)
-      .then(res.sendStatus(204))
-      .catch(err => {
-        return next(err);
-      });
+  notes.create(newItem)
+    .then(item => {
+      if(item) {
+        res.location(`http://${req.headers.host}/notes/${item.id}`).status(201).json(item);
+      } else {
+        next();
+      }
+    })
+    .catch(err => {
+      next(err);
     });
+});
+
+
+router.delete('/notes/:id', (req, res, next) => {
+  const id = req.params.id;
+  notes.delete(id)
+    .then(res.sendStatus(204))
+    .catch(err => {
+      return next(err);
+    });
+});
 
 
 

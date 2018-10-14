@@ -1,16 +1,13 @@
 'use strict';
 
-
-
-
 //require config.js module
 const { PORT } = require('./config'); 
 const express = require('express');
 
 const data = require('./db/notes');
 
-const morgan = require('morgan')
-const notesRouter = require('./router/notes.router')
+const morgan = require('morgan');
+const notesRouter = require('./router/notes.router');
 
 const app = express();
 
@@ -42,9 +39,12 @@ app.use(function(err, req, res, next) {
 });
 
 
+if (require.main === module) {
+  app.listen(PORT, function() {
+    console.info(`Server listening on ${this.address().port}`);
+  }).on('error', err => {
+    console.error(err);
+  });
+}
 
-app.listen(PORT, function() {
-  console.info(`Server listening on ${this.address().port}`);
-}).on('error', err => {
-  console.error(err);
-});
+module.exports = app;
